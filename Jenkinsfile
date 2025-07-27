@@ -34,8 +34,8 @@ pipeline {
             steps {
                 echo "Stopping and removing any existing container..."
                 sh """
-                   sudo  docker stop $CONTAINER_NAME || true
-                   sudo docker rm $CONTAINER_NAME || true
+                   docker stop $CONTAINER_NAME || true
+                   docker rm $CONTAINER_NAME || true
                 """
             }
         }
@@ -43,14 +43,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                sh "sudo docker build -t $IMAGE_NAME ."
+                sh "docker build -t $IMAGE_NAME ."
             }
         }
 
         stage('Run Docker Container') {
             steps {
                 echo " Running Docker container..."
-                sh "sudo docker run -d -p $APP_PORT:$APP_PORT --name $CONTAINER_NAME $IMAGE_NAME"
+                sh "docker run -d -p $APP_PORT:$APP_PORT --name $CONTAINER_NAME $IMAGE_NAME"
             }
         }
     }
